@@ -5,6 +5,7 @@ from flask_jwt import JWT
 from security import authenticate,identify
 from resources.user import UserRegister
 from resources.item import Item,ItemList
+from resources.store import Store, StoreList
 
 from db import db
 
@@ -18,10 +19,13 @@ api = Api(app)
 def create_table():
     db.create_all()
 
-jwt = JWT(app,authenticate,identify)
+jwt = JWT(app,authenticate,identify)    # /auth
 
+api.add_resource(Store,'/stores/<string:name>')
 api.add_resource(Item,'/items/<string:name>')
-api.add_resource(ItemList,'/items/')
+api.add_resource(ItemList,'/stores/')
+api.add_resource(StoreList,'/items/')
+
 api.add_resource(UserRegister,'/register')
 
 if __name__ == '__main__':
